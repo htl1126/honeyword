@@ -3,6 +3,7 @@ import csv
 from difflib import SequenceMatcher
 import re
 import string
+import difflib
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
@@ -67,20 +68,36 @@ def findNumberOfDigitsAddedAtTheBeginning(wordList):
 def hasSpecialChars(str):
     return any(char in set(string.punctuation) for char in str)
 
+def countSpecial(word):
+    numSpecChar = 0
+    for letter in word:
+        if hasSpecialChars(letter):
+            numSpecChar += 1
+    return numSpecChar
+
 #take in input text file, ouput a dictionary of special characters {1, 20; 2, 30...etc}
 #NOTE that for key = 4, that accounts for 4 or more special characters
 def freqSpecial(input):
     freqDict = dict([(0,0),(1, 0),(2,0),(3,0),(4,0)])
-    for i, wordList in enumerate(input):
-        numSpecChar = 0
-        for word in wordList:
-            for letter in word:
-                if hasSpecialChars(letter):
-                    numSpecChar += 1
-            if (numSpecChar > 4):
-                freqDict[4] += 1
-            else:      
-                freqDict[numSpecChar]+= 1
+   # for i, wordList in enumerate(input):
+    numSpecChar = 0
+    for word in input:
+
+        numFreq = countSpecial(word)
+            #print numFreq
+        numSpecChar = numFreq
+        '''for letter in word:
+            if hasSpecialChars(letter):
+                numSpecChar += 1'''
+
+        if (numSpecChar > 4):
+            freqDict[4] += 1
+        else:      
+            freqDict[numSpecChar]+= 1
+        ''' if numFreq > 4:
+            freqDict[4] += 1
+        else:
+            freqDict[numFreq] += 1'''
     return freqDict
 
 def readRockYouData(size=None, filename='rockyou-withcount.txt'):
@@ -97,16 +114,16 @@ def readRockYouData(size=None, filename='rockyou-withcount.txt'):
     return word_lst
 
 
-def findMostSimilarStringFromPool(inputFile):
+def findMostSimilarStringFromPool(input):
     cut_off_val = 0.9
     string_pool = readRockYouData(100)
     output_string_pool =[]
     result=dict()
-    for line in inputFile :
-        for word in line:
-            output_string_pool.append( difflib.get_close_matches(word, string_pool,
+   # for line in inputFile :
+    for word in input:
+        output_string_pool.append( difflib.get_close_matches(word, string_pool,
                                                    cutoff=cut_off_val))
-    if len(output_string_pool) and inputFile != output_string_pool[0]:
+    if len(output_string_pool) and input != output_string_pool[0]:
         for x in output_string_pool:
             for y in x:
                 if y in result:
@@ -152,6 +169,11 @@ def main(num_sweetword, num_set, filename):
     print findNumberOfFirstCharCapitalizedWords(inputArray)
     print findNumberOfDigitsAddedAtTheBeginning(inputArray)
     print findNumberOfDigitsAddedAtTheEnd(inputArray)
+    print freqSpecial(inputArray)
+    print "find most similar"
+    print findMostSimilarStringFromPool(inputArray)
+    print countSpecial("he@#$o")
+    #print inputArray
     # guesses = guess_honeyword(input_data)
     # for guess in guesses:
     #     print guess
