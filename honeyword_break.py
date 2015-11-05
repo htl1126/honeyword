@@ -78,6 +78,18 @@ def read_txt(filename):
         data.append(line.rstrip())
     return data
 
+def getNumberofDigitsAddedAtTheBeginningforString(word):
+    if re.match('([0-9]+).*?$', word):
+        return len(re.match('([0-9]+).*?$', word).group(1))
+    else:
+        return 0
+
+def getNumberofDigitsAddedAtTheEndforString(word):
+    if re.match('.*?([0-9]+)$', word):
+        return len(re.match('.*?([0-9]+)$', word).group(1))
+    else:
+        return 0
+        
 def parseDataArray(data):
     honeyArray = []
     for line in data:
