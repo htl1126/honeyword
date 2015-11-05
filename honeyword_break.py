@@ -2,6 +2,7 @@ import sys
 import csv
 from difflib import SequenceMatcher
 import re
+import string
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
@@ -115,7 +116,7 @@ def findMostSimilarStringFromPool(inputFile):
         return result
     else:
         return None
-        
+
 def read_data(filename, num_set, num_sweetword):
     data = []
     with open(filename, 'r') as f:
