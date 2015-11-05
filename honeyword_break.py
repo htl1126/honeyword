@@ -114,25 +114,22 @@ def readRockYouData(size=None, filename='rockyou-withcount.txt'):
     return word_lst
 
 
-def findMostSimilarStringFromPool(input):
+def findMostSimilarStringFromPool(word):
     cut_off_val = 0.9
     string_pool = readRockYouData(100)
     output_string_pool =[]
-    result=dict()
-   # for line in inputFile :
-    for word in input:
-        output_string_pool.append( difflib.get_close_matches(word, string_pool,
+    output_string_pool.append( difflib.get_close_matches(word, string_pool,
                                                    cutoff=cut_off_val))
-    if len(output_string_pool) and input != output_string_pool[0]:
-        for x in output_string_pool:
-            for y in x:
-                if y in result:
-                    result[y]+=1
-                else:
-                    result[y]=1
-        return result
+    if len(output_string_pool) and word != output_string_pool[0]:
+        #for x in output_string_pool:
+            #for y in x:
+                #if y in result:
+                    #result[y]+=1
+                #else:
+                    #result[y]=1
+        return 1
     else:
-        return None
+        return 0
 
 def read_data(filename, num_set, num_sweetword):
     data = []
