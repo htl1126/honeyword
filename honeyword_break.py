@@ -5,6 +5,8 @@ import re
 import string
 import difflib
 
+numberOfWords= 1.0
+firstCapitalizedWords=0
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
@@ -39,7 +41,14 @@ def findNumberOfDigitsAddedAtTheEnd(wordList):
         else:
             numDigitDict[key] = 1
     return numDigitDict
-
+"""
+def commonLength(wordList):
+    dictionary=dict()
+    for word in wordlist:
+        if len(word) in dictionary:
+            dictionary[len(word)]+=1
+        else 
+"""
 def findNumberOfFirstCharCapitalizedWords(wordList):
     capDict = dict()
     for word in wordList:
@@ -50,6 +59,9 @@ def findNumberOfFirstCharCapitalizedWords(wordList):
             capDict[key] += 1
         else:
             capDict[key] = 1
+    firstCapitalizedWords = capDict[1] / numberOfWords
+    print "First Capitalized Words"
+    print firstCapitalizedWords
     return capDict
 
 
@@ -170,6 +182,18 @@ def main(num_sweetword, num_set, filename):
     endDigitDic = findNumberOfDigitsAddedAtTheEnd(inputArray)
     splCharDic = freqSpecial(inputArray)
     print findMostSimilarStringFromPool(inputArray)
-    
+
+    print countSpecial("he@#$o")
+    #print inputArray
+    # guesses = guess_honeyword(input_data)
+    # for guess in guesses:
+    #     print guess
+
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], sys.argv[3])
+
+    honeywords = sys.argv[1]
+    passwords =sys.argv[2]
+    numberOfWords = float(honeywords)* float(passwords)
+    main(honeywords,passwords , sys.argv[3])
+    
+    
